@@ -49,23 +49,6 @@ public class GoogleOAuthResource {
     }
 
     @GET
-    @Path("/credentials")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response credentials() {
-        try {
-            Credential credential = credentialManager.getStoredCredential();
-            if (credential != null && credential.getAccessToken() != null) {
-                return Response.ok(credential).build();
-            } else {
-                return Response.status(Response.Status.UNAUTHORIZED)
-                        .entity("No valid credentials found. Please authenticate first.").build();
-            }
-        } catch (Exception e) {
-            return Response.serverError().entity("Failed to retrieve credentials: " + e.getMessage()).build();
-        }
-    }
-
-    @GET
     @Path("/oauth2callback")
     public Response callback(@QueryParam("code") String code) {
         try {
