@@ -21,11 +21,11 @@ public class GoogleOAuthResource {
     private static final GsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 
     private final GoogleOAuthConfig config;
-    private final CredentialManager credentialManager;
+    private final CredentialStore credentialStore;
 
-    public GoogleOAuthResource(GoogleOAuthConfig config, CredentialManager credentialManager) {
+    public GoogleOAuthResource(GoogleOAuthConfig config, CredentialStore credentialStore) {
         this.config = config;
-        this.credentialManager = credentialManager;
+        this.credentialStore = credentialStore;
     }
 
     @GET
@@ -52,7 +52,7 @@ public class GoogleOAuthResource {
     @Path("/oauth2callback")
     public Response callback(@QueryParam("code") String code) {
         try {
-            Credential credential = credentialManager.saveCredential(code);
+            Credential credential = credentialStore.saveCredential(code);
             return Response.ok("Credential saved to disk").build();
         } catch (Exception e) {
             return Response.serverError().entity("Failed to save credential: " + e.getMessage()).build();

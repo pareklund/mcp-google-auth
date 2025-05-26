@@ -14,7 +14,7 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 
 @Singleton
-public class CredentialManager {
+public class CredentialStore {
 
     private static final java.io.File CREDENTIALS_FOLDER = new java.io.File(System.getProperty("user.home"), ".credentials/my-app");
 
@@ -22,14 +22,8 @@ public class CredentialManager {
 
     private final GoogleOAuthConfig config;
 
-    public CredentialManager(GoogleOAuthConfig config) {
+    public CredentialStore(GoogleOAuthConfig config) {
         this.config = config;
-    }
-
-    Credential getStoredCredential() throws IOException, GeneralSecurityException {
-        var flow = createFlow();
-        // "user" is a default ID used for single-user apps
-        return flow.loadCredential("user");
     }
 
     Credential saveCredential(String code) throws Exception {
@@ -37,7 +31,25 @@ public class CredentialManager {
         GoogleTokenResponse response = flow.newTokenRequest(code)
                 .setRedirectUri(config.redirectUri())
                 .execute();
+        saveOAuthConfig();
         return flow.createAndStoreCredential(response, "user");
+    }
+
+    private void saveOAuthConfig() {
+        var properties = new java.util.Properties();
+        properties.setProperty(fullPropertyName(GoogleOAuthConfig.CLIENT_ID), config.clientId());
+        properties.setProperty(fullPropertyName(GoogleOAuthConfig.CLIENT_SECRET), config.clientSecret());
+        properties.setProperty(fullPropertyName(GoogleOAuthConfig.REDIRECT_URI), config.redirectUri());
+        properties.setProperty(fullPropertyName(GoogleOAuthConfig.SCOPE), config.scope());
+        try (var outputStream = new java.io.FileOutputStream(CREDENTIALS_FOLDER + "/config.properties")) {
+            properties.store(outputStream, "Google OAuth Configuration");
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to save properties", e);
+        }
+    }
+
+    private static String fullPropertyName(String property) {
+        return GoogleOAuthConfig.PREFIX + "." + property;
     }
 
     private GoogleAuthorizationCodeFlow createFlow() throws GeneralSecurityException, IOException {
