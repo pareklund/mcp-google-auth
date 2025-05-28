@@ -17,6 +17,9 @@ dependencies {
     implementation("io.quarkus:quarkus-arc")
     implementation("io.quarkus:quarkus-rest")
     testImplementation("io.quarkus:quarkus-junit5")
+    testImplementation("io.quarkus:quarkus-junit5-mockito")
+//    testImplementation("org.mockito:mockito-core:5.18.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:5.18.0")
     testImplementation("io.rest-assured:rest-assured")
     implementation("com.google.api-client:google-api-client:2.8.0")
     // OAuth 2.0 support
