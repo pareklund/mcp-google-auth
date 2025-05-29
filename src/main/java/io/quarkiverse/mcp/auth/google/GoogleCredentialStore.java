@@ -1,4 +1,4 @@
-package io.quarkiverse.mcp.google.auth;
+package io.quarkiverse.mcp.auth.google;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
@@ -14,7 +14,7 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 
 @Singleton
-public class CredentialStore {
+public class GoogleCredentialStore {
 
     private static final java.io.File CREDENTIALS_FOLDER = new java.io.File(System.getProperty("user.home"), ".credentials/my-app");
 
@@ -22,7 +22,7 @@ public class CredentialStore {
 
     private final GoogleOAuthConfig config;
 
-    public CredentialStore(GoogleOAuthConfig config) {
+    public GoogleCredentialStore(GoogleOAuthConfig config) {
         this.config = config;
     }
 

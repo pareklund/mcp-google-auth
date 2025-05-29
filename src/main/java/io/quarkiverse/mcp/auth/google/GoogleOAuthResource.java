@@ -1,4 +1,4 @@
-package io.quarkiverse.mcp.google.auth;
+package io.quarkiverse.mcp.auth.google;
 
 import com.google.api.client.auth.oauth2.AuthorizationCodeFlow;
 import com.google.api.client.auth.oauth2.Credential;
@@ -21,9 +21,9 @@ public class GoogleOAuthResource {
     private static final GsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 
     private final GoogleOAuthConfig config;
-    private final CredentialStore credentialStore;
+    private final GoogleCredentialStore credentialStore;
 
-    public GoogleOAuthResource(GoogleOAuthConfig config, CredentialStore credentialStore) {
+    public GoogleOAuthResource(GoogleOAuthConfig config, GoogleCredentialStore credentialStore) {
         this.config = config;
         this.credentialStore = credentialStore;
     }

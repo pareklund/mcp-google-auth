@@ -1,4 +1,4 @@
-package io.quarkiverse.mcp.google.auth;
+package io.quarkiverse.mcp.auth.google;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 

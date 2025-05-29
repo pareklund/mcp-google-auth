@@ -1,4 +1,4 @@
-package io.quarkiverse.mcp.google.auth;
+package io.quarkiverse.mcp.auth.google;
 
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
@@ -27,7 +27,7 @@ public class GoogleOAUthResourceTest implements QuarkusTestProfile {
 
     @InjectMock
     @MockitoConfig(convertScopes = true)
-    CredentialStore credentialStore;
+    GoogleCredentialStore credentialStore;
 
     @Override
     public Map<String, String> getConfigOverrides() {
